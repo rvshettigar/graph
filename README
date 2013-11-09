@@ -1,0 +1,14 @@
+Implentation of various graph algorithms
+=======================================================
+
+* Construction of Graph
+It contains two methods of inititalizing a graph
+
+==> Initialze a graph randomly using specified edge cost range and density
+
+==> Initialize a graph using a file containing number of vertices followed by triplets (vertex1 vertex2 cost)
+
+
+* Implementation of Dijkstra's algorithm
+
+* Implementation of Minimum Spanning Tree algorithm
