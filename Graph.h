@@ -21,6 +21,9 @@ class Graph{
         //Constructor to initialize the graph randomly
         Graph(int numV, int range, double density);
         
+        //Constructor to initialize the graph from a file
+        Graph(const char* fileName);
+
         //Destructor
         ~Graph(){
             delete adjacencyList;

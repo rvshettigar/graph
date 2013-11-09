@@ -1,10 +1,14 @@
 #include <time.h>
 #include <iostream>
+#include <fstream>
+#include <string>
 #include "Graph.h"
 
 using namespace std;
 bool debug = false ;
 bool debug1 = false;
+
+
 Graph::Graph(int numV, int range, double density){
     
     numVertices = numV;
@@ -43,6 +47,42 @@ Graph::Graph(int numV){
     adjacencyList = new vector<edgeCostMap*>(numV);
 }
 
+
+Graph::Graph(const char* fileName){
+    //Open the file
+    ifstream fileInput(fileName);
+    if( !fileInput.is_open()  ){
+        printf("Unable to open %s" , fileName);
+        exit(-1);
+    }
+    
+    if(!fileInput.eof()){
+        //Extract the num vertices from the first line
+        fileInput >> numVertices;
+    }
+
+    //Initialize the adjacency list
+    adjacencyList = new vector<edgeCostMap*>(numVertices);
+    
+    //Extract the edges and their cost from remaining lines
+    while(!fileInput.eof()){
+        int vertex1,vertex2;
+        double cost;
+
+        fileInput >> vertex1 >> vertex2 >> cost ;
+
+        //Perform some checks on the input
+        if( (vertex1 < 0 || vertex1>= numVertices) || (vertex2 <0 || vertex2 >= numVertices) || cost <= 0 ){
+            //Don't add this edge
+            continue;
+        }
+
+        //Adding the edge to the graph
+        addEdge(vertex1,vertex2,cost);
+    }
+
+}
+
 void Graph::addEdge(int x, int y, double cost){
     //Dont want loops in the graph 
     if( x == y ) return;
@@ -57,7 +97,7 @@ void Graph::addEdge(int x, int y, double cost){
    
 
     //Create an edge if edge doesn't exist
-    if( ecMap->find(y) != ecMap->end() || ecMapAdj->find(x) != ecMapAdj ->end() ){
+    if( ecMap->find(y) != ecMap->end() || ecMapAdj->find(x) != ecMapAdj->end() ){
         return;
     }
     
