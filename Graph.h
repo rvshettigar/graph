@@ -49,7 +49,8 @@ class Graph{
         //Set a edge value
         void setEdgeValue(int x,int y, double cost);
 
-
+        //Get the num vertices
+        inline int getNumVertices(){return numVertices;}
 
 
 };
